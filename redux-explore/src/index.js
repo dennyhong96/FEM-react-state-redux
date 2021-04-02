@@ -69,7 +69,17 @@ const rootReducer = combineReducers({
 	counter2: counterReducer2,
 });
 
-const store = createStore(rootReducer);
+// Middleware
+// a function that returns a function
+// For thunk, analytics, error monitoring
+const loggerMiddleware = ({ getState }) => {
+	return next => action => {
+		console.log("STATE FROM LOGGER -->", getState());
+		next(action);
+	};
+};
+
+const store = createStore(rootReducer, applyMiddleware(loggerMiddleware));
 
 console.log(store);
 /*
