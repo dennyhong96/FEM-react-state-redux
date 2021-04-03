@@ -1,72 +1,68 @@
-import React, { Component } from 'react';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
-class CreateCard extends Component {
-  state = {
-    title: '',
-    description: '',
-  };
+const INITIAL_STATE = { title: "", description: "" };
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
-  };
+const CreateCard = ({ listId }) => {
+	const [{ title, description }, setState] = useState({ title: "", description: "" });
+	const dispatch = useDispatch();
 
-  get isValid() {
-    const { title, description } = this.state;
-    return title && description;
-  }
+	const handleChange = (evt) => {
+		const { name, value } = evt.target;
+		setState((prev) => ({ ...prev, [name]: value }));
+	};
 
-  get isInvalid() {
-    return !this.isValid;
-  }
+	const isValid = () => title && description;
 
-  handleSubmit = (event) => {
-    event.preventDefault();
+	const handleSubmit = (evt) => {
+		evt.preventDefault();
 
-    if (this.isInvalid) return;
+		if (!isValid()) return;
 
-    const { onCreateCard } = this.props;
+		const id = Date.now().toString();
 
-    if (onCreateCard) {
-      onCreateCard(this.state);
-    }
+		dispatch({
+			type: "CARD_CREATE",
+			payload: {
+				card: {
+					id: Date.now().toString(),
+					title,
+					description,
+				},
+				listId,
+				cardId: id,
+			},
+		});
 
-    this.setState({
-      title: '',
-      description: '',
-    });
-  };
+		setState(INITIAL_STATE);
+	};
 
-  render() {
-    const { title, description } = this.state;
-
-    return (
-      <form className="CreateCard" onSubmit={this.handleSubmit}>
-        <input
-          className="CreateCard-title"
-          onChange={this.handleChange}
-          name="title"
-          placeholder="Title"
-          type="text"
-          value={title}
-        />
-        <input
-          className="CreateCard-description"
-          onChange={this.handleChange}
-          placeholder="Description"
-          name="description"
-          type="text"
-          value={description}
-        />
-        <input
-          className="CreateCard-submit"
-          type="submit"
-          value="Create New Card"
-          disabled={this.isInvalid}
-        />
-      </form>
-    );
-  }
-}
+	return (
+		<form className="CreateCard" onSubmit={handleSubmit}>
+			<input
+				className="CreateCard-title"
+				onChange={handleChange}
+				name="title"
+				placeholder="Title"
+				type="text"
+				value={title}
+			/>
+			<input
+				className="CreateCard-description"
+				onChange={handleChange}
+				placeholder="Description"
+				name="description"
+				type="text"
+				value={description}
+			/>
+			<input
+				className="CreateCard-submit"
+				type="submit"
+				value="Create New Card"
+				disabled={!isValid()}
+			/>
+		</form>
+	);
+};
 
 export default CreateCard;

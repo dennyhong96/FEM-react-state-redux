@@ -1,14 +1,19 @@
-import React from 'react';
-import List from './List';
+import React from "react";
 
-const Lists = ({ lists = [] }) => {
-  return (
-    <section className="Lists">
-      {lists.map((list) => (
-        <List />
-      ))}
-    </section>
-  );
+import { useSelector } from "react-redux";
+
+import List from "./List";
+
+const Lists = () => {
+	const listIds = useSelector(({ list }) => list.ids);
+
+	return (
+		<section className="Lists">
+			{listIds.map((listId) => (
+				<List key={listId} listId={listId} />
+			))}
+		</section>
+	);
 };
 
 export default Lists;
