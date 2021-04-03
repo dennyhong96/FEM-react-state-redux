@@ -4,7 +4,7 @@ import Users from "./Users";
 import CreateList from "./CreateList";
 import Lists from "./Lists";
 
-import "../normolized-state";
+import "../default-state-normalized";
 
 const Application = () => {
 	return (
