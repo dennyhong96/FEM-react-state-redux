@@ -1,11 +1,20 @@
-import React from "react";
+import React, { memo } from "react";
 import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
 
 import Card from "./Card";
 import CreateCard from "./CreateCard";
 
+const selectList = (list) => list.entities;
+const selectListId = (list, listId) => listId;
+const selectListById = createSelector([selectList, selectListId], (list, listId) => {
+	return list[listId];
+});
+
 const List = ({ listId }) => {
-	const list = useSelector(({ list }) => list.entities[listId]);
+	const list = useSelector(({ list }) => selectListById(list, listId));
+
+	console.log("list re-rendered", list.title);
 
 	return (
 		<article className="List">
@@ -20,4 +29,4 @@ const List = ({ listId }) => {
 	);
 };
 
-export default List;
+export default memo(List);

@@ -1,12 +1,26 @@
-import React from "react";
+import React, { memo } from "react";
 import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
 
 import MoveCardToList from "./MoveCardToList";
 
-const Card = ({ cardId, listId }) => {
-	const card = useSelector(({ card }) => card.entities[cardId]);
+const selectCards = (state, cardId) => {
+	const cards = state.card.entities;
+	return cards;
+};
+const selectCardId = (state, cardId) => {
+	return cardId;
+};
+const selectCardById = createSelector([selectCards, selectCardId], (cards, cardId) => {
+	// `cards` is what returned from `selectCards`
+	// `cardId` is what returned from `selectCardId`
+	return cards[cardId];
+});
 
-	console.log({ card });
+const Card = ({ cardId, listId }) => {
+	const card = useSelector((state) => selectCardById(state, cardId));
+
+	console.log("card re-rendered", card.title);
 
 	return (
 		<article className="Card">
@@ -17,4 +31,4 @@ const Card = ({ cardId, listId }) => {
 	);
 };
 
-export default Card;
+export default memo(Card);
