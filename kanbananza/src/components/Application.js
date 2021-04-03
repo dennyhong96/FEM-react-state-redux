@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import CreateList from './CreateList';
-import Lists from './Lists';
+import React from "react";
 
-// import defaultState from '../default-state.json';
+import Users from "./Users";
+import CreateList from "./CreateList";
+import Lists from "./Lists";
 
-class Application extends Component {
-  render() {
-    return (
-      <main className="Application">
-        <div>{/* Users will go here! */}</div>
-        <section>
-          <CreateList />
-          <Lists />
-        </section>
-      </main>
-    );
-  }
-}
+import "../normolized-state";
+
+const Application = () => {
+	return (
+		<main className="Application">
+			<Users />
+			<section>
+				<CreateList />
+				<Lists />
+			</section>
+		</main>
+	);
+};
 
 export default Application;
