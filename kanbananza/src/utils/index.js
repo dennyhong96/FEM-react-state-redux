@@ -18,3 +18,18 @@ export const addChildIdToParent = ({ state, parentId, childId, childProperty }) 
 		},
 	};
 };
+
+export const removeChildIdFromParent = ({ state, parentId, childId, childProperty }) => {
+	return {
+		...state,
+		entities: {
+			...state.entities,
+			[parentId]: {
+				...state.entities[parentId],
+				[childProperty]: state.entities[parentId][childProperty].filter(
+					(id) => id !== childId
+				),
+			},
+		},
+	};
+};

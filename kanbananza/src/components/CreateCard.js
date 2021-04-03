@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { createCard } from "../redux/actions/card-actions";
+import { createCardAction } from "../redux/actions/card-actions";
 
 const INITIAL_STATE = { title: "", description: "" };
 
@@ -10,9 +10,10 @@ const CreateCard = ({ listId }) => {
 	const [{ title, description }, setState] = useState({ title: "", description: "" });
 	const dispatch = useDispatch();
 
-	const { create } = useMemo(() => bindActionCreators({ create: createCard }, dispatch), [
-		dispatch,
-	]);
+	const { creatCard } = useMemo(
+		() => bindActionCreators({ creatCard: createCardAction }, dispatch),
+		[dispatch]
+	);
 
 	const handleChange = (evt) => {
 		const { name, value } = evt.target;
@@ -28,7 +29,7 @@ const CreateCard = ({ listId }) => {
 
 		const id = Date.now().toString();
 
-		create({ title, description, listId, id });
+		creatCard({ title, description, listId, id });
 
 		setState(INITIAL_STATE);
 	};

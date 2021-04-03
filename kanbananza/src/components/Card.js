@@ -4,13 +4,12 @@ import { createSelector } from "reselect";
 
 import MoveCardToList from "./MoveCardToList";
 
+// Memoized selectors
 const selectCards = (state, cardId) => {
 	const cards = state.card.entities;
 	return cards;
 };
-const selectCardId = (state, cardId) => {
-	return cardId;
-};
+const selectCardId = (state, cardId) => cardId;
 const selectCardById = createSelector([selectCards, selectCardId], (cards, cardId) => {
 	// `cards` is what returned from `selectCards`
 	// `cardId` is what returned from `selectCardId`
@@ -20,13 +19,13 @@ const selectCardById = createSelector([selectCards, selectCardId], (cards, cardI
 const Card = ({ cardId, listId }) => {
 	const card = useSelector((state) => selectCardById(state, cardId));
 
-	console.log("card re-rendered", card.title);
+	console.log("card rerendered -->", card.title);
 
 	return (
 		<article className="Card">
 			<h3>{card.title}</h3>
 			<div className="Card-description">{card.description}</div>
-			{/* <MoveCardToList cardId={card.id} listId={listId} /> */}
+			<MoveCardToList cardId={card.id} listId={listId} />
 		</article>
 	);
 };
