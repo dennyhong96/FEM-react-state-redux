@@ -33,3 +33,8 @@ export const removeChildIdFromParent = ({ state, parentId, childId, childPropert
 		},
 	};
 };
+
+export const mockAPI = async (response) => {
+	const randomDelay = (Math.ceil(Math.random() * 3) + 3) * 100;
+	return await new Promise((resolve) => setTimeout(resolve.bind(this, response), randomDelay));
+};

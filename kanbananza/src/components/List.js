@@ -8,9 +8,10 @@ import CreateCard from "./CreateCard";
 // Memoized selectors
 const selectList = (list) => list.entities;
 const selectListId = (list, listId) => listId;
-const selectListById = createSelector([selectList, selectListId], (list, listId) => {
-	return list[listId];
-});
+const selectListById = createSelector(
+	[selectList, selectListId],
+	(list, listId) => list[listId] // if `selectList` and `selectListId` selectors returns the same value, this function will not re-run
+);
 
 const List = ({ listId }) => {
 	const list = useSelector(({ list }) => selectListById(list, listId));

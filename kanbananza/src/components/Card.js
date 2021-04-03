@@ -13,7 +13,7 @@ const selectCardId = (state, cardId) => cardId;
 const selectCardById = createSelector([selectCards, selectCardId], (cards, cardId) => {
 	// `cards` is what returned from `selectCards`
 	// `cardId` is what returned from `selectCardId`
-	return cards[cardId];
+	return cards[cardId]; // if `selectCards` and `selectCardId` selectors returns the same value, this function will not re-run
 });
 
 const Card = ({ cardId, listId }) => {
