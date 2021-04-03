@@ -1,25 +1,23 @@
-import { lists } from "../../default-state-normalized";
+import { lists as defaultLists } from "../../default-state-normalized";
+import { addChildIdToParent } from "../../utils";
+import { CARD_CREATE } from "../actions/card-actions";
 
-export default (state = lists, action) => {
+export default (lists = defaultLists, action) => {
 	const { type, payload } = action;
 
 	switch (type) {
-		case "CARD_CREATE": {
+		case CARD_CREATE: {
 			const { cardId, listId } = payload;
-			return {
-				...state,
-				entities: {
-					...state.entities,
-					[listId]: {
-						...state.entities[listId],
-						cards: [...state.entities[listId].cards, cardId],
-					},
-				},
-			};
+			return addChildIdToParent({
+				state: lists,
+				parentId: listId,
+				childId: cardId,
+				childProperty: "cards",
+			});
 		}
 
 		default: {
-			return state;
+			return lists;
 		}
 	}
 };

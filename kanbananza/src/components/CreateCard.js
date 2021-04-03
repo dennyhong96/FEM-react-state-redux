@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { createCard } from "../redux/actions/card-actions";
 
 const INITIAL_STATE = { title: "", description: "" };
 
 const CreateCard = ({ listId }) => {
 	const [{ title, description }, setState] = useState({ title: "", description: "" });
 	const dispatch = useDispatch();
+
+	const { create } = useMemo(() => bindActionCreators({ create: createCard }, dispatch), [
+		dispatch,
+	]);
 
 	const handleChange = (evt) => {
 		const { name, value } = evt.target;
@@ -21,18 +28,7 @@ const CreateCard = ({ listId }) => {
 
 		const id = Date.now().toString();
 
-		dispatch({
-			type: "CARD_CREATE",
-			payload: {
-				card: {
-					id: Date.now().toString(),
-					title,
-					description,
-				},
-				listId,
-				cardId: id,
-			},
-		});
+		create({ title, description, listId, id });
 
 		setState(INITIAL_STATE);
 	};

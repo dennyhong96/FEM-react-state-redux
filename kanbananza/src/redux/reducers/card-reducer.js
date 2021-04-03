@@ -1,20 +1,22 @@
-import { cards } from "../../default-state-normalized";
+import { cards as defaultCards } from "../../default-state-normalized";
+import { addEntity } from "../../utils";
+import { CARD_CREATE } from "../actions/card-actions";
 
-export default (state = cards, action) => {
+export default (cards = defaultCards, action) => {
 	const { type, payload } = action;
 
 	switch (type) {
-		case "CARD_CREATE": {
+		case CARD_CREATE: {
 			const { card, cardId } = payload;
-			return {
-				...state,
-				entities: { ...state.entities, [cardId]: card },
-				ids: [...state.ids, cardId],
-			};
+			return addEntity({
+				state: cards,
+				id: cardId,
+				entity: card,
+			});
 		}
 
 		default: {
-			return state;
+			return cards;
 		}
 	}
 };
