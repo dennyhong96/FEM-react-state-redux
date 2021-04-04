@@ -9,7 +9,7 @@ const FetchTweets = () => {
 
   const { listTweets } = useMemo(
     () => bindActionCreators({ listTweets: listTweetsAction }, dispatch),
-    [],
+    [dispatch],
   );
 
   return <button onClick={listTweets}>Fetch Tweets</button>;
