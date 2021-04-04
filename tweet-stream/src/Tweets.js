@@ -1,8 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import Tweet from './Tweet';
 
-const Tweets = ({ tweets = [] }) => {
+const Tweets = () => {
+  const tweets = useSelector(({ tweets }) => tweets);
+
   return (
     <section className="Tweets">
       {tweets.map((tweet) => (

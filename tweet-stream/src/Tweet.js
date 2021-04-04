@@ -1,6 +1,8 @@
 import React from 'react';
 
 const Tweet = ({ tweet }) => {
+  console.log('re-rendered -->', `${tweet.text.slice(0, 10)}...`);
+
   return (
     <article className="Tweet">
       <header>

@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-const FetchTweets = ({ fetchTweets }) => {
-  return <button onClick={fetchTweets}>Fetch Tweets</button>;
+import { listTweetsAction } from './actions';
+
+const FetchTweets = () => {
+  const dispatch = useDispatch();
+
+  const { listTweets } = useMemo(
+    () => bindActionCreators({ listTweets: listTweetsAction }, dispatch),
+    [],
+  );
+
+  return <button onClick={listTweets}>Fetch Tweets</button>;
 };
 
 export default FetchTweets;
