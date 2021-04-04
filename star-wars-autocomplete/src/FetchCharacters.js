@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchCharacters } from './redux/actions';
 
-const FetchCharacters = ({ fetchCharacters }) => {
+const FetchCharacters = () => {
   const [value, setValue] = useState('');
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     const newValue = event.target.value;
-
     setValue(newValue);
 
-    if (fetchCharacters) fetchCharacters(newValue);
+    dispatch(fetchCharacters(newValue));
   };
 
   return (

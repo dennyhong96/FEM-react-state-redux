@@ -1,17 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-
-import reducer from './reducer';
-
+import { ReduxProvider } from './redux/store';
 import FetchCharacters from './FetchCharacters';
 import Characters from './Characters';
-
 import './styles.scss';
-
-const store = createStore(reducer);
 
 const Application = () => {
   return (
@@ -23,11 +16,9 @@ const Application = () => {
   );
 };
 
-const rootElement = document.getElementById('root');
-
 ReactDOM.render(
-  <Provider store={store}>
+  <ReduxProvider>
     <Application />
-  </Provider>,
-  rootElement,
+  </ReduxProvider>,
+  document.getElementById('root'),
 );

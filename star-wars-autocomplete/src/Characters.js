@@ -1,8 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import Character from './Character';
 
-const Characters = ({ characters = [] }) => {
+const Characters = () => {
+  const characters = useSelector(({ characters }) => characters);
+
   return (
     <section className="Characters">
       {characters.map((character) => (
